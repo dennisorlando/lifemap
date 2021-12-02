@@ -5,3 +5,8 @@ But from what I know that's it: there's absolutely no other way to infer anythin
 with each other. 
 That means the first requirement of this project and the only foundation from where to start is this one:
 >1. It has to have, at least, nodes connected with lines
+
+
+#### Main problematic
+
+With huge mind maps, there's the problem that 
