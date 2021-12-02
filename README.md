@@ -1,4 +1,4 @@
-# lifemap
+# LifeMap
 LifeMap is a project I just started on which I try to provide a way for humans to represent what they think and know in the form of a mind map. 
 
 In the first phase of the project I need to elicit my knowedge about concepts and how they relate to each other.
@@ -17,3 +17,12 @@ In that example I just gave we would require to spend time and energy in adjusti
 That might be not a problem, but what worries me is most certainly the fact that with XXXXL mind maps you would need to actually search for what concept you want
 to take in consideration. 
 "Searching" scales with size while our brain immediately changes perspective, and that seems to bring to an interesting problem I need to think about. 
+
+
+### Foundations
+
+If a group of neurons acts as a concept, we can represent that with lines that connect nodes in a concept map.
+But from what I know that's it: there's absolutely no other way to infer anything else about the "structure" of how different neurons (and concepts) are connected
+with each other. 
+That means the first requirement of this project is this one:
+>1. It has to have, at least, nodes connected with lines
