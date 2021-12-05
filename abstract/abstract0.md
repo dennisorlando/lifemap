@@ -86,14 +86,55 @@ Back to the implementation:
 
 #### Limitation of liveliness
 
-Sometimes, like in this moment, we get a brainwave based on a random concept that should have been dead and, therefore, not "thinkable". 
+Sometimes, like in this moment, we get a "brilliant idea" based on a random concept that should have been dead and, therefore, not "thinkable". 
 For example, while writing the previous part about cognition, I randomly thought of AI and made a statement about that. If I was working on a mind map,
-"AI" would have been a dead concept and I would need to search it. If it wasn't clear: I would really *hate* to search for a concept while I have a brainwave. 
+"AI" would have been a dead concept and I would have needed to search for it. If it wasn't clear: I would really *hate* to search for a concept while I have a
+brainwave. 
 
 Future work: - solving brainwaves: procastinare i collegamenti di concetti ad altri giorni
              - ai: collegamenti automatici basati sulla semantica e potenziamente NLP
+             
+
+#### Brainwaves (Ideas)
+
+While we are focusing on something, your subconscoius might connect that "something" with other subjects thus creating potential "brainwaves".
+For example, while thinking about liveliness I got a brainwave about a possible implementation in AI.
+It appears that, while we are awaken, those connections are made of a really low energy relatively to the high energy our main subject gets. That means
+most of those brainwaves would get ignored because our attention mechanism thinks on something else, thus ignoring them.
+Some of those ignored thoughts are just some nonsense intuitions that are better to be ignored; I'm sure tho that those intuitions are exactly what someone
+would need for any research project or for a project like this. Perhaps those nonsense intuitions only need a really small amount of attention to become a
+mind blowing idea.
+
+I better stop writing because that is a really interesting subject to study and if I want to navigate it solely by intuition then I better start walking
+on a minefield.
+Guess what, a concept map would really help right there because of the exponentially increasing complexity I'm starting to feel in my mind. Thank god I can
+filter those thoughts on what I need for this project.
+To better give you an idea on the implications for this project, I will give you this link: <https://bigthink.com/articles/why-you-shouldnt-focus-too-much/> 
+but I won't get any further than providing this basic ideas: 
+
+1. Many concepts we have in our mind are not dead, yet they are made of so little energy/liveliness that we can't or won't focus on them.[^4]
+   Example: AI is for me the greatest of those "surviving" concepts, which means I can feel it's alive in my consciousness but I'm not focusing on it, yet it's
+   there to give me some ideas sometimes. [^5]
+2. Those everlasting concepts might be affected by our everyday life. That means that the liveliness measure of a concept map would lose all its
+   relevance because it's not able to track how those concpets lose/gain liveliness during the day (or even multiple days). 
+   
+To sum up, we have 2.5 problems:
+1. The liveliness software would need to be smart enough to represent those "very low lively" concepts without classifying them as "dead".
+1.5. The "eye-tracking" idea might be useless but It's gonna be implemented anyways; it's a problem that needs to be discussed after the first release of 
+     this project, thus after playing and sperimenting with it. 
+2. It doesn't appear to be avoidable the fact that, while working on a lively part of the project, we get a brainwave thus we want to bring in consideration
+   an apparently dead concept. With many concepts, this results in having to search for that particular concept, which is the ever-lasting problematic I thought
+   I could avoid with eye tracking. I guess it's time to bring it to focus once an for all. 
+   
+   
+#### Resurrecting dead concepts
+
+
+
 
 [^1]: I'm single
 [^2]: Note that I keep interchanging the terms "concept" and "mind" maps, even tho I know they are different. What I refer to when I use those therms is the
 intuitive idea of the structure of concpet/facts connected to each other with nodes.
 [^3]: nicely illustrated in the book of Dehaene
+[^4]: Might it be that there's a mechanism in place in order to do just that? i.e. filtering thoughts if they are potential nonsense? That would prevent our neurons to bring up chain reactions and thus invoking concepts all around our brain, resulting in really messy concepts and ideas which results in nonsense, which is obviously not really ideal for survival. 
+[^5]: I would really need either a psychologist or another contributor to analyze these points because I have no idea if that's subjective, thus it happens only in my brain.
