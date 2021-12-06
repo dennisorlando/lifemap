@@ -18,7 +18,7 @@ That might be not a problem, but what worries me is most certainly the fact that
 to take in consideration. 
 "Searching" scales with size while our brain immediately changes perspective, and that seems to bring to an interesting problem I need to think about. 
 
-
+ddddddddddddddddddddddddd
 ### Abstract
 
 * [Abstract](https://github.com/dennisorlando/lifemap/edit/main/abstract/abstract0.md)
