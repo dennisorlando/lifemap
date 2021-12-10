@@ -1,0 +1,2 @@
+select(coordinates):
+1. looks for each object in the loaded lifemap, returns true if coordinates are inside a hitbox. Therefore returns that the hitbox' Object
