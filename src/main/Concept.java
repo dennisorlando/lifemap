@@ -1,15 +1,17 @@
 package main;
 
-public class Concept {
+import panel.Selectable;
+
+public class Concept extends Selectable {
 	
 	public int top_y;
 	public int bot_y;
 	public int right_x;
 	public int left_x;
 	
-	int id;
+	public int id;
 	
-	String name;
+	public String name;
 	
 	public Concept(int x, int y, String name) {
 		//the coordinates Graphics2D uses are the ones of the top left corner 
@@ -17,6 +19,7 @@ public class Concept {
 		this.top_y = y;
 		this.name = name;
 		//if = random;
+		this.selected = false;
 	}
 	public Concept(int x, int y, String name, int id) {
 		this.left_x = x;

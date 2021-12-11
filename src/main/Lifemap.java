@@ -1,7 +1,10 @@
 package main;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -9,9 +12,11 @@ public class Lifemap {
 	
 	private HashMap<Integer,Concept> concepts;
 	private ArrayList<Node> nodes;
+	private String path;
 	
 	public Lifemap(String path) {
 		
+		this.path = path;
 		this.concepts = new HashMap<Integer,Concept>();
 		this.nodes = new ArrayList<Node>();
 		
@@ -44,8 +49,20 @@ public class Lifemap {
 		
 	}
 	
-	public void writeToFile(String path) {
-		//write all concepts and nodes to a file. 
+	public void save() {
+		try {
+			BufferedWriter bf = new BufferedWriter(new FileWriter(path));
+			for (Concept c : concepts.values()) {
+				bf.write("\nConcept:\n  "+c.id+"\n  "+c.name+"\n  "+c.left_x+"\n  "+c.top_y);
+			}
+			for (Node n : nodes) {
+				bf.write("\nNode:\n  "+n.description+"\n  "+n.concept_A_id+"\n  "+n.concept_B_id);
+			}
+			bf.close();
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void addConcept(Concept concept) {

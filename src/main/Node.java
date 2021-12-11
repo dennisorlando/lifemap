@@ -1,9 +1,11 @@
 package main;
 
-public class Node {
+import panel.Selectable;
+
+public class Node extends Selectable{
 	
-	int concept_A_id;
-	int concept_B_id;
+	public int concept_A_id;
+	public int concept_B_id;
 	
 	String description;
 	

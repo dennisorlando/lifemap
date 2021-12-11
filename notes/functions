@@ -1,0 +1,17 @@
+Functions:
+
+Edit text:
+1. user double clicks a concept
+2. a specific keylistener is attached to the jpanel which modifies the Concept's name by text input
+3. Exit: when user clicks away, else pressing enter
+4. keylistener is deatached from the jframe, main gets back to default state.
+5. When drawin all concepts, if a concept's id matches the stored ID of the concept you're editing than it draws a rectangle
+   around the text
+   
+Save:
+every second it autosaves -> gets all the concepts and nodes in the map and rewrites them in the same format as they got
+loaded.
+
+Add concept:
+
+Add node:
