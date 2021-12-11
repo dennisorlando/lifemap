@@ -1,5 +1,9 @@
 Functions:
 
+Select:
+1. gets coordinates
+2. for every concept and node looks if coordinates are between the bounds of those concepts
+
 Edit text:
 1. user double clicks a concept
 2. a specific keylistener is attached to the jpanel which modifies the Concept's name by text input
