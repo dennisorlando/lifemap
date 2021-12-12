@@ -40,4 +40,13 @@ public class Concept extends Selectable {
 		return (top_y+bot_y)/2;
 	}
 	
+	
+	public void moveTo(int x, int y) {
+		this.left_x = x;
+		this.top_y = y;
+	}
+	public void translate(int vx, int vy) {
+		this.left_x += vx;
+		this.top_y += vy;
+	}
 }

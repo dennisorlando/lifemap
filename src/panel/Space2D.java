@@ -2,18 +2,16 @@ package panel;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
+import badstuff.Cursors;
 import listeners.TextEditor;
 import main.Concept;
 import main.Lifemap;
@@ -25,8 +23,14 @@ import main.State;
 
 public class Space2D extends JPanel{
 
-	public int x_translate = 0;
-	public int y_translate = 0;
+	public double x_translate = 0;
+	public double y_translate = 0;
+	
+	public double viewport_center_x;
+	public double viewport_center_y;
+	
+	public double vcd_x;
+	public double vcd_y;
 	
 	private static final long serialVersionUID = -6102397487208146573L;
 	private static final int CONCEPT_EDGE_WIDTH = 10;
@@ -35,6 +39,7 @@ public class Space2D extends JPanel{
 	private static final int CONCEPT_SELECTED_ADDITIONAL_WIDTH = 5;
 	
 	public int EDITING_CONCEPT_ID = -1;
+	public float scale = 1;
 	
 	public Lifemap lifemap;
 	
@@ -49,8 +54,19 @@ public class Space2D extends JPanel{
 		
 		drawBackgroundGrid(g2d);
 		
-		g.translate(x_translate, y_translate);
-		g.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+		g2d.drawString(scale+"", 0, 50);
+		g2d.setColor(Color.BLACK);
+		
+		g2d.scale(scale, scale);
+		
+		int effective_vc_x = (int) (viewport_center_x/scale);
+		int effective_vc_y = (int) (viewport_center_y/scale);
+		
+		vcd_x = (int) (effective_vc_x - viewport_center_x);
+		vcd_y = (int) (effective_vc_y - viewport_center_y);
+		
+		g2d.translate(x_translate+vcd_x, y_translate+vcd_y);
+		g2d.setFont(new Font("TimesRoman", Font.PLAIN, 20));
 		g2d.setRenderingHint(
 			    RenderingHints.KEY_ANTIALIASING,
 			    RenderingHints.VALUE_ANTIALIAS_ON);
@@ -59,6 +75,7 @@ public class Space2D extends JPanel{
 		        RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		
 		drawMap(g2d);
+
 	}
 	
 	private void paintConcept(Concept c, Graphics2D g) {
@@ -81,7 +98,6 @@ public class Space2D extends JPanel{
 		}
 		
 		c.addComputedValues(right_x, bot_y);
-		//todo: returns in strings
 		
 	}
 	private void paintNode(Node n, Graphics2D g) {
@@ -127,8 +143,9 @@ public class Space2D extends JPanel{
 
 	public Selectable clickedObject(int x_, int y_) {
 		
-		int x = x_ - x_translate;
-		int y = y_ - y_translate;
+		double x = x_/scale - x_translate - vcd_x;
+		double y = y_/scale - y_translate - vcd_y;
+		
 		for (Concept c : lifemap.getConcepts().values()) {
 			if (y > c.top_y && y < c.bot_y && x > c.left_x && x < c.right_x) {
 				return c;
@@ -137,16 +154,17 @@ public class Space2D extends JPanel{
 		return null;
 	}
 	public void editConceptText(Concept c) {
-		BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
-		Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(
-			    cursorImg, new Point(0, 0), "blank cursor");
-		this.setCursor(blankCursor);
+		this.setCursor(Cursors.blank);
 		Main.state = State.EDITING_CONCEPT_TEXT;
+		Main.jframe.removeKeyListener(Main.jframe.getKeyListeners()[0]);
 		Main.jframe.addKeyListener(new TextEditor(this, c));
 		EDITING_CONCEPT_ID = c.id;
 		this.repaint();
 	}
 	public void save() {
 		lifemap.save();
+	}
+	public void scale(Graphics2D g) {
+		
 	}
 }

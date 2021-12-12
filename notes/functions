@@ -17,5 +17,13 @@ every second it autosaves -> gets all the concepts and nodes in the map and rewr
 loaded.
 
 Add concept:
+1. User presses key (C)
+2. A new concept is created at cursors position
+3. atomatically starts editing this concept
 
-Add node:
+Delete:
+1. User presses a key (D)
+2. clicked object is destroyed
+
+Scale:
+1. no clue how I did that, but it works

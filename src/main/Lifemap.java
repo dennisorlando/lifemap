@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 public class Lifemap {
 	
@@ -65,7 +66,8 @@ public class Lifemap {
 		}
 	}
 	
-	public void addConcept(Concept concept) {
+	public void createConcept(Concept concept) {
+		concept.id = generateID();
 		concepts.put(concept.id, concept);
 	}
 	public void addNode(Node node) {
@@ -76,6 +78,19 @@ public class Lifemap {
 	}
 	public ArrayList<Node> getNodes(){
 		return this.nodes;
+	}
+	private int generateID() {
+		Random r = new Random();
+		while(true) {
+			int i = r.nextInt();
+			for (int id : concepts.keySet()) {
+				if(i == id) {
+					continue;
+				}
+			}
+			System.out.println(i);
+			return i;
+		}
 	}
 	
 }

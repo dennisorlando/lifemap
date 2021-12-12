@@ -1,9 +1,9 @@
 package listeners;
 
-import java.awt.Cursor;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import badstuff.Cursors;
 import main.Concept;
 import main.Main;
 import main.State;
@@ -25,13 +25,13 @@ public class TextEditor implements KeyListener{
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		System.out.println(e.getKeyCode());
 		switch(e.getKeyCode()) {
 		case 10:
 			Main.jframe.removeKeyListener(this);
 			Main.state = State.DEFAULT;
-			space.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			space.setCursor(Cursors.default_cursor);
 			space.EDITING_CONCEPT_ID = -1;
+			Main.jframe.addKeyListener(new DefaultKeyListener(space));
 			space.repaint();
 		case 20,16,17,18:
 			break;
