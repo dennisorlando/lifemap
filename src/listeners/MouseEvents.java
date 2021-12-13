@@ -8,7 +8,9 @@ import java.awt.event.MouseWheelListener;
 
 import badstuff.Cursors;
 import main.Concept;
+import main.FloatingNode;
 import main.Main;
+import main.Node;
 import main.State;
 import panel.Selectable;
 import panel.Space2D;
@@ -20,19 +22,48 @@ public class MouseEvents implements MouseListener, MouseMotionListener, MouseWhe
 	private int last_x = 0;
 	private int last_y = 0;
 	
+	private FloatingNode fn;
+	
 	public MouseEvents(Space2D space) {
 		this.space = space;
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
+		
+		int canvasX = (int) space.screenToCanvasX(e.getX());
+		int canvasY = (int) space.screenToCanvasY(e.getY());
+		
 		switch(Main.state) {
+		case ADDING_NODE_1:
+			fn.x2 = canvasX;
+			fn.y2 = canvasY;
+			
+			Selectable c1 = space.clickedObject((int)space.canvasToScreenX(fn.x1), (int)space.canvasToScreenY(fn.y1));
+			Selectable c2 = space.clickedObject(e.getX(), e.getY());
+			
+			if(c1 instanceof Concept && c2 instanceof Concept) {
+				Node n = new Node(((Concept) c1).id, ((Concept) c2).id, fn.description);
+				space.lifemap.addNode(n);
+				space.lifemap.getFloatingNodes().remove(fn);
+			}
+			
+			space.setCursor(Cursors.default_cursor);
+			Main.state = State.DEFAULT;
+			System.out.println(Main.state);
+			break;
+		case ADDING_NODE_0:
+			fn = new FloatingNode("",canvasX, canvasY, canvasX, canvasY);
+			Main.state = State.ADDING_NODE_1;
+			space.lifemap.addFloatingNode(fn);
+			space.repaint();
+			break;
 		case EDITING_CONCEPT_TEXT:
 			return;
 		case CREATING_CONCEPT:
 			space.setCursor(Cursors.default_cursor);
 			Main.state = State.DEFAULT;
-			Concept c = new Concept(e.getX()-(int)space.x_translate, e.getY()-(int)space.y_translate, "");
+			Concept c = new Concept(canvasX, canvasY, "");
 			space.lifemap.createConcept(c);
 			space.editConceptText(c);
 			space.repaint();
@@ -42,7 +73,11 @@ public class MouseEvents implements MouseListener, MouseMotionListener, MouseWhe
 			if (s_ != null) {
 				if (s_ instanceof Concept) {
 					space.lifemap.getConcepts().remove(((Concept) s_).id);
+					space.lifemap.save();
 				}
+			}
+			else {
+				//asdf
 			}
 			Main.state = State.DEFAULT;
 			space.setCursor(Cursors.default_cursor);
@@ -85,6 +120,8 @@ public class MouseEvents implements MouseListener, MouseMotionListener, MouseWhe
 			break;
 		case DELETE:
 			break;
+		case ADDING_NODE_0, ADDING_NODE_1:
+			break;
 		}
 	}
 	@Override
@@ -101,6 +138,8 @@ public class MouseEvents implements MouseListener, MouseMotionListener, MouseWhe
 			space.setCursor(Cursors.default_cursor);
 			Main.state = State.DEFAULT;
 		case DELETE:
+			break;
+		case ADDING_NODE_0, ADDING_NODE_1:
 			break;
 		}
 	}
@@ -132,12 +171,30 @@ public class MouseEvents implements MouseListener, MouseMotionListener, MouseWhe
 			break;
 		case DELETE:
 			break;
+		case ADDING_NODE_0, ADDING_NODE_1:
+			break;
 		}
 	}
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-
+		
+		space.x = e.getX();
+		space.y = e.getY();
+		space.repaint();
+		
+		int canvasX = (int) space.screenToCanvasX(e.getX());
+		int canvasY = (int) space.screenToCanvasY(e.getY());
+		
+		switch(Main.state) {
+		case ADDING_NODE_1:
+			fn.x2 = canvasX;
+			fn.y2 = canvasY;
+			space.repaint();
+			break;
+		default:
+			break;
+		}
 	}
 
 	@Override
@@ -145,6 +202,7 @@ public class MouseEvents implements MouseListener, MouseMotionListener, MouseWhe
 		
 		space.viewport_center_x -= (space.viewport_center_x-e.getX())/10;
 		space.viewport_center_y -= (space.viewport_center_y-e.getY())/10;
+		
 		space.scale -= e.getWheelRotation()/100f;
 		
 		//System.out.println(eff_view_center_x+"/"+eff_view_center_y);

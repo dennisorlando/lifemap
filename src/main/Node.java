@@ -7,6 +7,8 @@ public class Node extends Selectable{
 	public int concept_A_id;
 	public int concept_B_id;
 	
+	public boolean floating;
+	
 	String description;
 	
 	public Node(int conceptA_ID, int conceptB_ID, String description) {

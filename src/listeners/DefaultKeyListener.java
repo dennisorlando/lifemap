@@ -31,6 +31,10 @@ public class DefaultKeyListener implements KeyListener{
 			space.setCursor(Cursors.delete);
 			Main.state = State.DELETE;
 		}
+		if (e.getKeyChar() == 'n') {
+			space.setCursor(Cursors.node);
+			Main.state = State.ADDING_NODE_0;
+		}
 		
 	}
 

@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import badstuff.Cursors;
 import listeners.TextEditor;
 import main.Concept;
+import main.FloatingNode;
 import main.Lifemap;
 import main.Main;
 import main.Node;
@@ -31,6 +32,9 @@ public class Space2D extends JPanel{
 	
 	public double vcd_x;
 	public double vcd_y;
+	
+	public int x;
+	public int y;
 	
 	private static final long serialVersionUID = -6102397487208146573L;
 	private static final int CONCEPT_EDGE_WIDTH = 10;
@@ -57,6 +61,7 @@ public class Space2D extends JPanel{
 		g2d.drawString(scale+"", 0, 50);
 		g2d.setColor(Color.BLACK);
 		
+		
 		g2d.scale(scale, scale);
 		
 		int effective_vc_x = (int) (viewport_center_x/scale);
@@ -66,6 +71,7 @@ public class Space2D extends JPanel{
 		vcd_y = (int) (effective_vc_y - viewport_center_y);
 		
 		g2d.translate(x_translate+vcd_x, y_translate+vcd_y);
+		
 		g2d.setFont(new Font("TimesRoman", Font.PLAIN, 20));
 		g2d.setRenderingHint(
 			    RenderingHints.KEY_ANTIALIASING,
@@ -105,7 +111,18 @@ public class Space2D extends JPanel{
 		Concept c1 = lifemap.getConcepts().get(n.concept_A_id);
 		Concept c2 = lifemap.getConcepts().get(n.concept_B_id);
 		
-		g.drawLine(c1.getCenterX(), c1.getCenterY(), c2.getCenterX(), c2.getCenterY());
+		float x1 = c1.getCenterX();
+		float x2 = c2.getCenterX();
+		float y1 = c1.getCenterY();
+		float y2 = c2.getCenterY();
+		
+		g.drawLine((int)x1,(int)y1,(int)x2,(int)y2);
+		
+	}
+	private void paintFloatingNode(FloatingNode n, Graphics2D g) {
+		g.setColor(new Color(100,0,50));
+		g.drawLine(n.x1, n.y1, n.x2, n.y2);
+		g.setColor(Color.BLACK);
 	}
 	
 	public void drawMap(Graphics2D g2d) {
@@ -121,7 +138,10 @@ public class Space2D extends JPanel{
 		for (Concept c : lifemap.getConcepts().values()) {
 			paintConcept(c, g2d);
 		}
-		
+		for (FloatingNode f : lifemap.getFloatingNodes()) {
+			paintFloatingNode(f, g2d);
+		}
+		clickedbject(x,y,10,g2d);
 	}
 
 	public void drawBackgroundGrid(Graphics2D g2d) {
@@ -143,8 +163,8 @@ public class Space2D extends JPanel{
 
 	public Selectable clickedObject(int x_, int y_) {
 		
-		double x = x_/scale - x_translate - vcd_x;
-		double y = y_/scale - y_translate - vcd_y;
+		double x = screenToCanvasX(x_);
+		double y = screenToCanvasY(y_);
 		
 		for (Concept c : lifemap.getConcepts().values()) {
 			if (y > c.top_y && y < c.bot_y && x > c.left_x && x < c.right_x) {
@@ -153,18 +173,52 @@ public class Space2D extends JPanel{
 		}
 		return null;
 	}
+	public void clickedbject(int x_, int y_, double radius, Graphics2D g) {
+		double x = screenToCanvasX(x_);
+		double y = screenToCanvasY(y_);
+		
+		for (Node n : lifemap.getNodes()) {
+
+			Concept c1 = lifemap.getConcepts().get(n.concept_A_id);
+			Concept c2 = lifemap.getConcepts().get(n.concept_B_id);
+			
+			float x1 = c1.getCenterX();
+			float x2 = c2.getCenterX();
+			float y1 = c1.getCenterY();
+			float y2 = c2.getCenterX();
+			
+			float m = (y1-y2)/(x1-x2);
+			float mP = -1f/m;
+			System.out.println(m);
+			float q = y_-mP*x_;
+			
+			g.drawLine(0, (int)q, 500, (int) (mP*500+q));
+			
+		}
+	}
+	
+	public double screenToCanvasX(double x) {
+		return x/scale - x_translate - vcd_x;
+	}
+	public double screenToCanvasY(double y) {
+		return y/scale - y_translate - vcd_y;
+	}
+	public double canvasToScreenX(double x) {
+		return (x+x_translate+vcd_x)*scale;
+	}
+	public double canvasToScreenY(double y) {
+		return (y+y_translate+vcd_y)*scale;
+	}
 	public void editConceptText(Concept c) {
 		this.setCursor(Cursors.blank);
 		Main.state = State.EDITING_CONCEPT_TEXT;
 		Main.jframe.removeKeyListener(Main.jframe.getKeyListeners()[0]);
 		Main.jframe.addKeyListener(new TextEditor(this, c));
 		EDITING_CONCEPT_ID = c.id;
+		lifemap.save();
 		this.repaint();
 	}
 	public void save() {
 		lifemap.save();
-	}
-	public void scale(Graphics2D g) {
-		
 	}
 }

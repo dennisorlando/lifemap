@@ -4,9 +4,16 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 import main.Main;
+import panel.Space2D;
 
 public class Window implements WindowListener{
 
+	private Space2D space;
+	
+	public Window(Space2D space) {
+		this.space = space;
+	}
+	
 	@Override
 	public void windowOpened(WindowEvent e) {
 		// TODO Auto-generated method stub
@@ -15,13 +22,13 @@ public class Window implements WindowListener{
 
 	@Override
 	public void windowClosing(WindowEvent e) {
-		// TODO Auto-generated method stub
-		
+		space.lifemap.save();
+		Main.running = false;
+		System.out.println("Lifemap saved");
 	}
 
 	@Override
 	public void windowClosed(WindowEvent e) {
-		Main.running = false;
 		
 	}
 

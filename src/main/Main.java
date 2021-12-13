@@ -1,8 +1,5 @@
 package main;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 import javax.swing.JFrame;
 
 import listeners.DefaultKeyListener;
@@ -40,39 +37,26 @@ public class Main {
 		
 		jframe.add(space);
 		jframe.addKeyListener(new DefaultKeyListener(space));
-		jframe.addWindowListener(new Window());
+		jframe.addWindowListener(new Window(space));
 		jframe.setVisible(true);
 		
-		//autosave
-		Timer t = new Timer();
-		t.scheduleAtFixedRate(new TimerTask(){
-
-			@Override
-			public void run() {
-				space.save();
-			}
-			
-		}, 1000, 1000);
-		
-		while (running) {
+		/*while (running) {
 			long start = System.nanoTime();
-			
 			space.repaint();
 
 			long middle = System.nanoTime();
 			long delta_nano = middle - start;
-			double fps = 1000000000d/delta_nano;
 			
 			long min_time_millis = 1000/MAX_FRAMERATE;
 			
 			try {
-				Thread.sleep(min_time_millis-delta_nano/1000000);
+				Thread.sleep(Math.max(min_time_millis-delta_nano/1000000, 0));
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 			long end = System.nanoTime();
 			delta_time = (end-start)/1000000000d;
-		}
+		}*/
 		
 	}
 	

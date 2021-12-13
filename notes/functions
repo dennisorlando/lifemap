@@ -27,3 +27,8 @@ Delete:
 
 Scale:
 1. no clue how I did that, but it works
+
+Create node:
+1. a floating, temporary node is created. If this temporary, "floating" node's coordinates match the coordinates of 2 
+   concepts, then this floating node becomes a permanent node. It also changes it's color.
+
