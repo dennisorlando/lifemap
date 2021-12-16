@@ -32,3 +32,8 @@ Create node:
 1. a floating, temporary node is created. If this temporary, "floating" node's coordinates match the coordinates of 2 
    concepts, then this floating node becomes a permanent node. It also changes it's color.
 
+Move:
+1. presses space while in DEFAULT mode. Initial cursor position is set
+2. keeps updating delta between current cursor position and previous position. Concepts are moved by that vector
+3. back to defualt when user presses SPACE again
+

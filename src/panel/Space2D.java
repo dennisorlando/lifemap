@@ -14,7 +14,6 @@ import javax.swing.JPanel;
 import badstuff.Cursors;
 import listeners.TextEditor;
 import main.Concept;
-import main.FloatingNode;
 import main.Lifemap;
 import main.Main;
 import main.Node;
@@ -111,6 +110,15 @@ public class Space2D extends JPanel{
 		Concept c1 = lifemap.getConcepts().get(n.concept_A_id);
 		Concept c2 = lifemap.getConcepts().get(n.concept_B_id);
 		
+		if (c1 == null || c2 == null) {
+			g.setStroke(new BasicStroke(3));
+			g.setColor(new Color(100,0,50));
+			g.drawLine(n.x1, n.y1, n.x2, n.y2);
+			g.setStroke(new BasicStroke(1));
+			g.setColor(Color.BLACK);
+			return;
+		}
+		
 		float x1 = c1.getCenterX();
 		float x2 = c2.getCenterX();
 		float y1 = c1.getCenterY();
@@ -118,11 +126,6 @@ public class Space2D extends JPanel{
 		
 		g.drawLine((int)x1,(int)y1,(int)x2,(int)y2);
 		
-	}
-	private void paintFloatingNode(FloatingNode n, Graphics2D g) {
-		g.setColor(new Color(100,0,50));
-		g.drawLine(n.x1, n.y1, n.x2, n.y2);
-		g.setColor(Color.BLACK);
 	}
 	
 	public void drawMap(Graphics2D g2d) {
@@ -138,10 +141,6 @@ public class Space2D extends JPanel{
 		for (Concept c : lifemap.getConcepts().values()) {
 			paintConcept(c, g2d);
 		}
-		for (FloatingNode f : lifemap.getFloatingNodes()) {
-			paintFloatingNode(f, g2d);
-		}
-		clickedbject(x,y,10,g2d);
 	}
 
 	public void drawBackgroundGrid(Graphics2D g2d) {
@@ -171,30 +170,13 @@ public class Space2D extends JPanel{
 				return c;
 			}
 		}
-		return null;
-	}
-	public void clickedbject(int x_, int y_, double radius, Graphics2D g) {
-		double x = screenToCanvasX(x_);
-		double y = screenToCanvasY(y_);
-		
 		for (Node n : lifemap.getNodes()) {
-
-			Concept c1 = lifemap.getConcepts().get(n.concept_A_id);
-			Concept c2 = lifemap.getConcepts().get(n.concept_B_id);
-			
-			float x1 = c1.getCenterX();
-			float x2 = c2.getCenterX();
-			float y1 = c1.getCenterY();
-			float y2 = c2.getCenterX();
-			
-			float m = (y1-y2)/(x1-x2);
-			float mP = -1f/m;
-			System.out.println(m);
-			float q = y_-mP*x_;
-			
-			g.drawLine(0, (int)q, 500, (int) (mP*500+q));
-			
+			if (n.distanceFrom(lifemap, (int)x, (int)y) < 10) {
+				return n;
+			}
 		}
+		
+		return null;
 	}
 	
 	public double screenToCanvasX(double x) {

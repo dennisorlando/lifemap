@@ -18,30 +18,45 @@ public class DefaultKeyListener implements KeyListener{
 	
 	@Override
 	public void keyTyped(KeyEvent e) {
-		
+		switch (Main.state) {
+		case DEFAULT:
+			if (e.getKeyChar() == ' ') {
+				Main.state = State.MOVING;
+				space.setCursor(Cursors.blank);
+			}
+			break;
+		case MOVING:
+			if (e.getKeyChar() == ' ') {
+				Main.state = State.DEFAULT;
+				MouseEvents.recalculate = true;
+				space.setCursor(Cursors.default_cursor);
+			}
+			break;
+		default:
+			break;
+		}
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if(e.getKeyChar() == 'c') {
+		switch(e.getKeyChar()) {
+		case 'c':
 			space.setCursor(Cursors.cross);
 			Main.state = State.CREATING_CONCEPT;
-		}
-		if (e.getKeyChar() == 'd') {
+			break;
+		case 'd':
 			space.setCursor(Cursors.delete);
 			Main.state = State.DELETE;
-		}
-		if (e.getKeyChar() == 'n') {
+			break;
+		case 'n':
 			space.setCursor(Cursors.node);
 			Main.state = State.ADDING_NODE_0;
+			break;
 		}
-		
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

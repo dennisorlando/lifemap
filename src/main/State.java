@@ -8,4 +8,5 @@ public enum State {
 	DELETE,
 	ADDING_NODE_0,
 	ADDING_NODE_1,
+	MOVING,
 }

@@ -8,7 +8,6 @@ import java.awt.event.MouseWheelListener;
 
 import badstuff.Cursors;
 import main.Concept;
-import main.FloatingNode;
 import main.Main;
 import main.Node;
 import main.State;
@@ -22,7 +21,9 @@ public class MouseEvents implements MouseListener, MouseMotionListener, MouseWhe
 	private int last_x = 0;
 	private int last_y = 0;
 	
-	private FloatingNode fn;
+	public static boolean recalculate;
+	
+	private Node fn;
 	
 	public MouseEvents(Space2D space) {
 		this.space = space;
@@ -42,20 +43,20 @@ public class MouseEvents implements MouseListener, MouseMotionListener, MouseWhe
 			Selectable c1 = space.clickedObject((int)space.canvasToScreenX(fn.x1), (int)space.canvasToScreenY(fn.y1));
 			Selectable c2 = space.clickedObject(e.getX(), e.getY());
 			
-			if(c1 instanceof Concept && c2 instanceof Concept) {
-				Node n = new Node(((Concept) c1).id, ((Concept) c2).id, fn.description);
-				space.lifemap.addNode(n);
-				space.lifemap.getFloatingNodes().remove(fn);
-			}
 			
+			if (c1 instanceof Concept && c2 instanceof Concept) {
+				fn.concept_A_id = ((Concept) c1).id;
+				fn.concept_B_id = ((Concept) c2).id;
+				fn.calculateCoords(space.lifemap);
+			}
 			space.setCursor(Cursors.default_cursor);
 			Main.state = State.DEFAULT;
 			System.out.println(Main.state);
 			break;
 		case ADDING_NODE_0:
-			fn = new FloatingNode("",canvasX, canvasY, canvasX, canvasY);
+			fn = new Node(-1, -1, "",canvasX, canvasY, canvasX, canvasY);
 			Main.state = State.ADDING_NODE_1;
-			space.lifemap.addFloatingNode(fn);
+			space.lifemap.addNode(fn);
 			space.repaint();
 			break;
 		case EDITING_CONCEPT_TEXT:
@@ -73,6 +74,10 @@ public class MouseEvents implements MouseListener, MouseMotionListener, MouseWhe
 			if (s_ != null) {
 				if (s_ instanceof Concept) {
 					space.lifemap.getConcepts().remove(((Concept) s_).id);
+					space.lifemap.save();
+				}
+				if (s_ instanceof Node) {
+					space.lifemap.getNodes().remove((Node) s_);
 					space.lifemap.save();
 				}
 			}
@@ -161,8 +166,10 @@ public class MouseEvents implements MouseListener, MouseMotionListener, MouseWhe
 		case DRAGGING:
 			int dx = e.getX()-last_x;
 			int dy = e.getY()-last_y;
+			
 			space.x_translate += dx/space.scale;
 			space.y_translate += dy/space.scale;
+			
 			last_y = e.getY();
 			last_x = e.getX();
 			space.repaint();
@@ -179,18 +186,43 @@ public class MouseEvents implements MouseListener, MouseMotionListener, MouseWhe
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		
-		space.x = e.getX();
-		space.y = e.getY();
-		space.repaint();
-		
+		System.out.println(Main.state);
+
 		int canvasX = (int) space.screenToCanvasX(e.getX());
 		int canvasY = (int) space.screenToCanvasY(e.getY());
+		
+		space.x = canvasX;
+		space.y = canvasY;
+		space.repaint();
 		
 		switch(Main.state) {
 		case ADDING_NODE_1:
 			fn.x2 = canvasX;
 			fn.y2 = canvasY;
 			space.repaint();
+			break;
+		case MOVING:
+			float deltaX = last_x-e.getX();
+			float deltaY = last_y-e.getY();
+			
+			last_x = e.getX();	
+			last_y = e.getY();
+			
+			System.out.println(deltaX+"/"+deltaY+"/"+recalculate);
+			
+			if (!recalculate) {
+				for (Concept c : space.lifemap.getConcepts().values()) {
+					if (!c.selected) {
+						continue;	
+					}
+					c.left_x -= deltaX;
+					c.top_y -= deltaY;
+					space.repaint();
+				}
+			}
+			else {
+				recalculate = false;
+			}
 			break;
 		default:
 			break;
