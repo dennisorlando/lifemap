@@ -128,7 +128,7 @@ To sum up, we have 2.5 problems:
    
    
 #### Resurrecting dead concepts
-Procastinated for when I actually need it.
+Procastinated for when I actually need it. I figured out it's not really a big deal.
 
 #### Goal
 As I already states somewhere, the goal of this project is to represent cognition. 
@@ -151,6 +151,8 @@ Riguardo alla fattibilità della cosa qualcuno avrà forse dei dubbi, ma se per 
 Fatto sta che già riusciamo ad estendere la suddetta abilità quando scriviamo al computer a velocità abbastanza elevate,riuscendo dunque a scrivere in tempo
 reale ciò che stiamo pensando.
 
+#### End of abstract
+at this point I'm just trying new stuff, which means the beta "abstract notes" will be written in the notes
 
 [^1]: I'm single
 [^2]: Note that I keep interchanging the terms "concept" and "mind" maps, even tho I know they are different. What I refer to when I use those therms is the
