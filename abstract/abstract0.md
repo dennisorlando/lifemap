@@ -128,8 +128,28 @@ To sum up, we have 2.5 problems:
    
    
 #### Resurrecting dead concepts
+Procastinated for when I actually need it.
 
+#### Goal
+As I already states somewhere, the goal of this project is to represent cognition. 
+With "cognition" I mean the lowest possible, yet appreciable, level of thoughts that happen in our mind.
 
+An example of what I'm trying to achieve could be one where a concept mapper thinks a lot on how to represent something. 
+In that case, that hypotetical concept mapper would need to spend a lot of time on the map in order to make it more understandable for other people. 
+Yet, this is not the case: if someone uses the idea of this project on the example I just stated, then he would make a map based on the decisions he made to 
+make a concept map.
+This might be messy; here's a better representation of the level of cognition I want to represent:
+
+         CONCEPT MAPPER ->  THOUGHTS  -> MAKES CONCEPTS
+         "LIFE MAPPER" -> THINKS WHILE WRITIG THE THOUGHTS ON A "LIFEMAP" 
+       
+A skilled concept mapper has a lot of thoughts on how to make concept.
+I want to represent the thoughts he has that make him/her create a concept map.
+
+Riguardo alla fattibilità della cosa qualcuno avrà forse dei dubbi, ma se per l'uomo è facilissimo esprimere propri pensieri tramite l'uso del linguaggio 
+(quando parliamo; in tempo reale) allora l'esprimere concetti in tempo reale dovrebbe essere solamente un estensione di questa abilità innata. 
+Fatto sta che già riusciamo ad estendere la suddetta abilità quando scriviamo al computer a velocità abbastanza elevate,riuscendo dunque a scrivere in tempo
+reale ciò che stiamo pensando.
 
 
 [^1]: I'm single
