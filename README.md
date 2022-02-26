@@ -1,3 +1,9 @@
+# ABANDONED PROJECT
+I took a long break from this project because I didn't know how to proceed.
+I just stumbled across Zettelkasten, which means there is already some material out there about how to achieve what I want.
+Therefore, not having anything close to the knowledge of Zettelkasten's creators, this project is officially abandoned.
+
+
 # LifeMap
 LifeMap is a project I just started on which I try to provide a way for humans to represent what they think and know in the form of a mind map. 
 
